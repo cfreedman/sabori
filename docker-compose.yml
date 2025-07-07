@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: sabori_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+
+  app:
+    context: ./app
+    dockerfile: Dockerfile
+    container_name: sabori_app
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+
+  client:
+    context: ./client
+    dockerfile: Dockerfile
+    container_name: sabori_client
+    depends_on:
+      - app
