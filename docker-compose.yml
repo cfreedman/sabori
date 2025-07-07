@@ -5,21 +5,26 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sabori
     ports:
       - "5432:5432"
 
   app:
-    context: ./app
-    dockerfile: Dockerfile
+    build:
+      context: ./app
+      dockerfile: Dockerfile
     container_name: sabori_app
     depends_on:
       - db
     ports:
       - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/sabori
 
   client:
-    context: ./client
-    dockerfile: Dockerfile
+    build:
+      context: ./client
+      dockerfile: Dockerfile
     container_name: sabori_client
     depends_on:
       - app
