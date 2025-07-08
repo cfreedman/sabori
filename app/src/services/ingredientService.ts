@@ -5,13 +5,13 @@ interface CreateIngredient {
   cuisines: string[];
 }
 
-async function getAllIngredients(fastify: FastifyInstance) {
+export async function getAllIngredients(fastify: FastifyInstance) {
   const result = await fastify.pg.query("SELECT * FROM ingredients");
 
   return result.rows;
 }
 
-async function getIngredientById(fastify: FastifyInstance, id: number) {
+export async function getIngredientById(fastify: FastifyInstance, id: number) {
   const { rows } = await fastify.pg.query(
     "SELECT * FROM ingredients WHERE id = $1",
     [id]
@@ -20,11 +20,14 @@ async function getIngredientById(fastify: FastifyInstance, id: number) {
   return rows.length > 0 ? rows[0] : null;
 }
 
-async function updateIngredient(fastify: FastifyInstance) {
+export async function updateIngredient(fastify: FastifyInstance) {
   return;
 }
 
-async function getOrCreateIngredient(fastify: FastifyInstance, name: string) {
+export async function getOrCreateIngredient(
+  fastify: FastifyInstance,
+  name: string
+) {
   const { rows } = await fastify.pg.query(
     "INSERT INTO ingredients (name) VALUES ($1) ON CONFLICT (name) DO NOTHING RETURNING *",
     [name]
@@ -40,7 +43,7 @@ async function getOrCreateIngredient(fastify: FastifyInstance, name: string) {
   return selectResult.rows[0];
 }
 
-async function createStoreIngredientBridge(
+export async function createStoreIngredientBridge(
   fastify: FastifyInstance,
   ingredientId: number,
   storeId: number,
@@ -53,7 +56,7 @@ async function createStoreIngredientBridge(
   );
 }
 
-async function updateStoreIngredientBridge(
+export async function updateStoreIngredientBridge(
   fastify: FastifyInstance,
   storeId: number,
   ingredientId: number,
@@ -68,7 +71,7 @@ async function updateStoreIngredientBridge(
   );
 }
 
-async function createCuisineIngredientBridge(
+export async function createCuisineIngredientBridge(
   fastify: FastifyInstance,
   ingredientId: number,
   cuisineIds: number[]

@@ -1,21 +1,27 @@
 import { FastifyInstance } from "fastify";
 
-async function getAllCuisines(fastify: FastifyInstance) {
+export async function getAllCuisines(fastify: FastifyInstance) {
   const results = await fastify.pg.query("SELECT * FROM cuisines");
 
   return results.rows;
 }
 
-async function getCuisineById(fastify: FastifyInstance, id: number) {
+export async function getCuisineById(
+  fastify: FastifyInstance,
+  cuisineId: number
+) {
   const results = await fastify.pg.query(
     "SELECT * FROM cuisines WHERE id = $1",
-    [id]
+    [cuisineId]
   );
 
   return results.rows;
 }
 
-async function getOrCreateCuisine(fastify: FastifyInstance, cuisine: string) {
+export async function getOrCreateCuisine(
+  fastify: FastifyInstance,
+  cuisine: string
+) {
   const { rows } = await fastify.pg.query(
     "INSERT INTO cuisines (name) VALUES ($1) ON CONFLICT (name) DO NOTHING RETURNING *",
     [cuisine]

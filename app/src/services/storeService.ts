@@ -12,21 +12,21 @@ interface StoreData extends CreateStore {
   created_at: string;
 }
 
-async function getAllStores(fastify: FastifyInstance) {
+export async function getAllStores(fastify: FastifyInstance) {
   const results = await fastify.pg.query("SELECT * FROM stores");
 
   return results.rows;
 }
 
-async function getStoreById(fastify: FastifyInstance, id: number) {
+export async function getStoreById(fastify: FastifyInstance, storeId: number) {
   const results = await fastify.pg.query("SELECT * FROM stores WHERE id = $1", [
-    id,
+    storeId,
   ]);
 
   return results.rows[0];
 }
 
-async function getOrCreateStore(
+export async function getOrCreateStore(
   fastify: FastifyInstance,
   storeData: CreateStore
 ) {
@@ -47,7 +47,7 @@ async function getOrCreateStore(
   return selectResult.rows[0];
 }
 
-async function getStoresWithIngredient(
+export async function getStoresWithIngredient(
   fastify: FastifyInstance,
   ingredientId: number
 ) {
@@ -62,7 +62,7 @@ async function getStoresWithIngredient(
   return rows;
 }
 
-async function getStoresWithCuisine(
+export async function getStoresWithCuisine(
   fastify: FastifyInstance,
   cuisineId: number
 ) {
