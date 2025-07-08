@@ -7,7 +7,7 @@ CREATE DATABASE sabori;
 CREATE TABLE IF NOT EXISTS stores (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-    address TEXT NOT NULL,
+    address TEXT UNIQUE NOT NULL,
     latitude REAL NOT NULL,
     longitude REAL NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS stores (
 
 CREATE TABLE IF NOT EXISTS ingredients (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
+    name TEXT UNIQUE NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -29,12 +29,12 @@ CREATE TABLE IF NOT EXISTS stores_ingredients_bridge (
 
 CREATE TABLE IF NOT EXISTS cuisines (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL
+    name TEXT UNIQUE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS cuisines_ingredients_bridge (
     ingredient_id INTEGER NOT NULL REFERENCES ingredients(id) ON DELETE CASCADE,
-    cuisines_id INTEGER NOT NULL REFERENCES cuisines(id) ON DELETE CASCADE
+    cuisine_id INTEGER NOT NULL REFERENCES cuisines(id) ON DELETE CASCADE
 );
 
 -- Sample data for stores
