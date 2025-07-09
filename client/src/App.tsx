@@ -9,6 +9,8 @@ import {
 import MapComponent from "./Map.tsx";
 import "./App.css";
 import { Input } from "./components/ui/input.tsx";
+import LocationCard from "./components/ui/LocationCard.tsx";
+import { locations } from "./data/locations.ts";
 
 function App() {
   return (
@@ -19,7 +21,14 @@ function App() {
             <h2 className="text-lg font-semibold">Sabori</h2>
           </SidebarHeader>
           <SidebarContent>
-            <p>Sidebar content goes here.</p>
+            {locations.map((location) => (
+              <LocationCard
+                key={location.name}
+                name={location.name}
+                description={location.description}
+                imageUrl={location.imageUrl}
+              />
+            ))}
           </SidebarContent>
         </Sidebar>
         <SidebarInset>

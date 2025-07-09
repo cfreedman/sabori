@@ -123,3 +123,18 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.scroll-mask-top {
+  -webkit-mask-image: linear-gradient(to bottom, black 95%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 95%, transparent 100%);
+}
+
+.scroll-mask-bottom {
+  -webkit-mask-image: linear-gradient(to top, black 95%, transparent 100%);
+  mask-image: linear-gradient(to top, black 95%, transparent 100%);
+}
+
+.scroll-mask-both {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+}

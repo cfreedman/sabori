@@ -368,12 +368,30 @@ function SidebarSeparator({
 }
 
 function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
+  const [scrollMask, setScrollMask] = React.useState("scroll-mask-bottom");
+
+  const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
+    const isAtTop = scrollTop === 0;
+    const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1; // Use a small tolerance
+
+    if (isAtTop) {
+      setScrollMask("scroll-mask-top");
+    } else if (isAtBottom) {
+      setScrollMask("scroll-mask-bottom");
+    } else {
+      setScrollMask("scroll-mask-both");
+    }
+  };
+
   return (
     <div
       data-slot="sidebar-content"
       data-sidebar="content"
+      onScroll={handleScroll}
       className={cn(
-        "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden",
+        "flex min-h-0 flex-1 flex-col gap-2 overflow-auto group-data-[collapsible=icon]:overflow-hidden max-h-screen",
+        scrollMask,
         className
       )}
       {...props}
